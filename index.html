@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>KARAS — Иван Карась, бренд-дизайнер</title>
+  <meta name="description" content="Портфолио Ивана Карася: айдентика, плакаты, мерч и статьи о дизайне.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KARAS">
+  <meta property="og:title" content="KARAS — Иван Карась, бренд-дизайнер">
+  <meta property="og:description" content="Портфолио Ивана Карася: айдентика, плакаты, мерч и статьи о дизайне.">
+  <meta property="og:image" content="assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <script>try{var t=localStorage.getItem("karas-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/posters.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body data-page="home">
+
+<main>
+  <!-- ПЕРВЫЙ ЭКРАН: фонарик -->
+  <section class="hero" aria-label="KARAS">
+    <div class="hero-scene" aria-hidden="true">
+      <!-- железный стол: предметы и раскладка берутся из js/table-data.js (макет в Figma) -->
+      <div class="t-stage" data-table></div>
+    </div>
+    <div class="hero-dark"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-cursor"></div>
+    <div class="hero-ui">
+      <h1 class="hero-id visually-hidden"><b>Иван Карась</b> — бренд-дизайнер</h1>
+      <span class="hero-hint"><span class="hint-dark">Води светом</span><span class="hint-light">Води тенью</span> · двигай предметы</span>
+      <span class="hero-scroll">Листай ↓</span>
+    </div>
+  </section>
+
+  <!-- ИЗБРАННЫЕ ПРОЕКТЫ -->
+  <section class="section wrap" id="work">
+    <div class="section-head">
+      <h2 class="section-title"><span class="plate">Проекты</span><span class="count" data-count="projects"></span></h2>
+      <a class="link-more" href="projects.html">Все проекты <span data-arrow></span></a>
+    </div>
+    <div class="projects-grid projects-grid--featured" data-featured></div>
+  </section>
+
+  <!-- ПЛАКАТЫ -->
+  <section class="section posters-teaser">
+    <div class="wrap section-head">
+      <h2 class="section-title"><span class="plate plate--white">Плакаты</span><span class="count" data-count="posters"></span></h2>
+      <a class="link-more" href="posters.html">Открыть галерею <span data-arrow></span></a>
+    </div>
+    <div data-stack></div>
+  </section>
+
+  <!-- СТАТЬИ -->
+  <section class="section wrap">
+    <div class="section-head">
+      <h2 class="section-title"><span class="plate plate--steel">Статьи</span><span class="count" data-count="articles"></span></h2>
+      <a class="link-more" href="articles.html">Все статьи <span data-arrow></span></a>
+    </div>
+    <div class="article-list" data-articles></div>
+  </section>
+
+  <!-- ОБО МНЕ + КОНТАКТЫ -->
+  <section class="section about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-photo js-reveal reveal"><img src="content/about/ivan.webp" width="1200" height="1200" alt="Иван Карась" loading="lazy" decoding="async"></div>
+      <div>
+        <h2 class="about-big">Привет, я <span class="plate plate--black">Иван Карась</span></h2>
+        <div class="about-text" data-about></div>
+        <div class="services" data-services></div>
+        <div class="contacts" data-contacts></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/brand.js"></script>
+<script src="js/art.js"></script>
+<script src="js/site.js"></script>
+<script src="js/posters.js"></script>
+<script src="js/table-data.js"></script>
+<script src="js/table.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

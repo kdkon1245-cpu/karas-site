@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Плакаты — KARAS</title>
+  <meta name="description" content="Галерея плакатов Ивана Карася.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KARAS">
+  <meta property="og:title" content="Плакаты — KARAS">
+  <meta property="og:description" content="Галерея плакатов Ивана Карася.">
+  <meta property="og:image" content="assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <script>try{var t=localStorage.getItem("karas-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/posters.css">
+</head>
+<body data-page="posters" class="posters-page" data-view="overview">
+
+<main>
+  <section class="stack-wrap" aria-label="Плакаты — обзор">
+    <div data-stack aria-label="Стопка плакатов. Колесо мыши, стрелки или свайп — листать, клик — открыть"></div>
+    <div class="stack-ui">
+      <h1 class="stack-title section-title"><span class="plate">Плакаты</span></h1>
+      <span class="stack-count">Всего <b data-total></b></span>
+      <div class="stack-caption" data-caption aria-live="polite"></div>
+      <span class="stack-hint">Колесо · свайп · стрелки — листать &nbsp;/&nbsp; клик — открыть</span>
+      <div class="pills stack-filters" data-pills></div>
+    </div>
+  </section>
+  <section class="index-wrap" aria-label="Плакаты — архив">
+    <div class="wrap">
+      <div class="index-ui">
+        <h1>Архив плакатов</h1>
+        <div class="pills" data-pills></div>
+      </div>
+      <div data-cabinet></div>
+    </div>
+  </section>
+  <div class="view-toggle" role="group" aria-label="Вид">
+    <button type="button" data-view-btn="overview" aria-pressed="true">Overview</button>
+    <button type="button" data-view-btn="index" aria-pressed="false">Index</button>
+  </div>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/brand.js"></script>
+<script src="js/art.js"></script>
+<script src="js/site.js"></script>
+<script src="js/posters.js"></script>
+<script src="js/pages.js"></script>
+</body>
+</html>

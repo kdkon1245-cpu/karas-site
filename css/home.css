@@ -1,0 +1,168 @@
+/* =========================================================
+   Главная: первый экран с фонариком, блоки, обо мне
+   ========================================================= */
+.hero {
+  position: relative; height: 100svh; min-height: 620px; overflow: hidden;
+  background: var(--black); cursor: none;
+  --x: 50%; --y: 50%; --r: 240px; --dark: 1;
+}
+@media (hover: none) { .hero { cursor: auto; } }
+.hero-scene { position: absolute; inset: 0; }
+.hero-scene > * { position: absolute; }
+
+.h-block { background: var(--graphite); }
+.h-block--steel { background: var(--steel); }
+
+.h-logo { left: 6vw; top: 34%; width: min(64vw, 1100px); display: flex; aspect-ratio: 1188 / 216; margin: 0; }
+.h-logo .hl-eye { width: 30.3%; background: var(--black); display: grid; place-items: center; outline: 1px solid #1d1d1d; }
+.h-logo .hl-eye svg { width: 80%; height: auto; }
+.h-logo .hl-word { flex: 1; background: var(--lime); display: grid; place-items: center; }
+.h-logo .hl-word svg { width: 86%; height: auto; color: var(--black); }
+
+.h-label { font: 600 clamp(14px, 1.4vw, 22px)/1 var(--f-body); padding: 0.5em 0.7em; background: var(--steel); color: var(--black); }
+.h-intro { right: 6vw; bottom: 15%; width: min(36vw, 560px); font: 500 clamp(20px, 2.1vw, 34px)/1.2 var(--f-body); color: var(--white); margin: 0; }
+.h-intro em { font-style: normal; background: var(--lime); color: var(--black); padding: 0 0.15em; }
+.h-poster { width: clamp(120px, 12vw, 210px); aspect-ratio: 3 / 4; box-shadow: 0 20px 50px -20px #000; }
+.h-poster svg, .h-poster img { width: 100%; height: 100%; object-fit: cover; }
+.h-star { color: var(--white); }
+.h-star svg { width: 100%; height: 100%; }
+.h-word-s { font: 700 13px/1 var(--f-display); color: var(--white); }
+.h-vert { font: 600 13px/1 var(--f-body); color: var(--white); writing-mode: vertical-rl; transform: rotate(180deg); }
+
+.hero-dark {
+  position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: radial-gradient(circle at var(--x) var(--y),
+    rgba(0,0,0,0) 0, rgba(0,0,0,0) calc(var(--r) * 0.42),
+    rgba(0,0,0,0.55) calc(var(--r) * 0.72), rgba(0,0,0,0.955) var(--r));
+  opacity: var(--dark);
+}
+.hero-glow {
+  position: absolute; inset: 0; pointer-events: none; z-index: 4; mix-blend-mode: screen;
+  background: radial-gradient(circle at var(--x) var(--y), rgba(190,255,29,0.2) 0, rgba(190,255,29,0.06) calc(var(--r) * 0.6), rgba(190,255,29,0) var(--r));
+  opacity: var(--dark);
+}
+.hero-cursor {
+  position: absolute; left: 0; top: 0; z-index: 5; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  border-radius: 50%; background: var(--lime); box-shadow: 0 0 18px 4px rgba(190,255,29,0.6);
+  transform: translate(var(--cx, -100px), var(--cy, -100px)); pointer-events: none;
+}
+@media (hover: none) { .hero-cursor { display: none; } }
+
+.hero-ui { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+.hero-ui > * { position: absolute; font: 500 12px/1.4 var(--f-mono); text-transform: uppercase; letter-spacing: 0.04em; }
+.hero-id { left: var(--gutter); top: calc(var(--header-h) + 16px); color: var(--ink); }
+.hero-id b { color: var(--lime); font-weight: 500; }
+.hero-hint { left: var(--gutter); bottom: 22px; color: var(--muted); display: flex; gap: 10px; align-items: center; }
+.hero-hint::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 10px var(--lime); animation: pulse 1.6s infinite; }
+.hero-scroll { right: var(--gutter); bottom: 22px; color: var(--muted); }
+
+@media (max-width: 760px) {
+  .hero { --r: 170px; }
+  .h-logo { left: var(--gutter); right: var(--gutter); width: auto; top: 38%; }
+  .h-intro { left: var(--gutter); right: var(--gutter); width: auto; bottom: 12%; font-size: 22px; }
+  .h-hide-m { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-dark, .hero-glow { opacity: 0 !important; } .hero { cursor: auto; } .hero-cursor { display: none; } }
+
+/* ---------- плакаты на главной ---------- */
+.posters-teaser { padding-bottom: clamp(56px, 6vw, 96px); }
+.posters-teaser .stack { border-block: 1px solid var(--line); }
+
+/* ---------- обо мне ---------- */
+.about { background: var(--steel); color: var(--black); }
+.about-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 5vw, 90px); align-items: start; }
+.about-photo { position: relative; aspect-ratio: 1 / 1; background: var(--black); overflow: hidden; }
+.about-photo svg, .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+.about-photo .tag { position: absolute; left: 12px; bottom: 12px; }
+.about-big { margin: 0 0 28px; font: 800 clamp(30px, 4.2vw, 64px)/0.98 var(--f-display); text-transform: uppercase; }
+.about-big .plate { font-size: 0.9em; }
+.about-text { max-width: 60ch; font-size: 18px; line-height: 1.6; }
+.about-text p { margin: 0 0 1em; }
+.services { display: flex; flex-wrap: wrap; gap: 6px; margin: 26px 0 40px; }
+.services .tag { font-size: 12px; padding: 8px 10px 7px; }
+.contacts { border-top: 1.5px solid var(--black); }
+.contact {
+  display: grid; grid-template-columns: 140px 1fr 24px; gap: 16px; align-items: center;
+  padding: 16px 0; border-bottom: 1.5px solid var(--black);
+  transition: background 0.2s, color 0.2s, padding 0.3s var(--ease);
+}
+.contact span:first-child { font: 500 12px/1 var(--f-mono); text-transform: uppercase; }
+.contact b { font: 700 clamp(20px, 2.4vw, 34px)/1.1 var(--f-display); overflow-wrap: anywhere; }
+.contact svg { width: 22px; height: 22px; }
+.contact:hover { background: var(--black); color: var(--lime); padding-inline: 16px; }
+@media (max-width: 860px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-photo { max-width: 420px; }
+  .contact { grid-template-columns: 1fr 24px; }
+  .contact span:first-child { grid-column: 1 / -1; margin-bottom: -8px; }
+}
+.section--dark-after + .site-footer { margin-top: 0; }
+
+/* масштаб и воздух */
+.h-logo { width: min(40vw, 700px); top: 40%; left: 8vw; }
+.h-intro { width: min(28vw, 420px); font-size: clamp(17px, 1.45vw, 23px); line-height: 1.35; right: 8vw; }
+.h-label { font-size: clamp(12px, 1vw, 16px); }
+.h-poster { width: clamp(96px, 9vw, 160px); }
+.about-grid { grid-template-columns: minmax(260px, 420px) minmax(0, 640px); justify-content: space-between; gap: clamp(40px, 8vw, 140px); }
+.about-big { font-size: clamp(24px, 2.4vw, 38px); line-height: 1.1; margin-bottom: 32px; }
+.about-text { font-size: 17px; }
+.services { margin: 32px 0 48px; }
+.contact { padding: 18px 0; grid-template-columns: 120px 1fr 20px; }
+.contact b { font: 600 clamp(16px, 1.3vw, 19px)/1.3 var(--f-body); }
+@media (max-width: 760px) {
+  .h-logo { left: var(--gutter); right: var(--gutter); width: auto; }
+  .h-intro { left: var(--gutter); right: var(--gutter); width: auto; font-size: 18px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .contact { grid-template-columns: 1fr 20px; }
+}
+
+/* =========================================================
+   ПЕРВЫЙ ЭКРАН: железный стол с предметами (макет Figma 1440×900)
+   ========================================================= */
+.hero { background: #6c7279 url("../content/table/bg.webp") center / cover no-repeat; container-type: size; }
+/* сцена масштабируется как cover: макет всегда закрывает экран, центр в центре */
+.t-stage { position: absolute; left: 50%; top: 50%; width: max(100cqw, 160cqh); aspect-ratio: 1440 / 900; translate: -50% -50%; z-index: 1; }
+@media (max-aspect-ratio: 4/5) { .t-stage { width: 235cqw; } }
+.t-obj { position: absolute; margin: 0; pointer-events: none; user-select: none; -webkit-user-select: none; will-change: transform; transition: filter 0.3s; }
+.t-obj img { display: block; width: 100%; height: 100%; -webkit-user-drag: none; }
+.t-joint { position: absolute; inset: 0; }
+.t-obj .t-pimg { position: absolute; width: auto; height: auto; max-width: none; }
+.t-obj.is-drag:not(.t-rig) { filter: drop-shadow(0 22px 26px rgba(0,0,0,0.45)); }
+/* у брелока тень у каждой части отдельно (Safari криво рисует тень у вложенных повёрнутых слоёв) */
+.t-rig .t-pimg { transition: filter 0.3s; }
+.t-rig.is-drag .t-pimg { filter: drop-shadow(0 14px 14px rgba(0,0,0,0.4)); }
+.hero.is-over { cursor: grab; }
+.hero.is-grab { cursor: grabbing; }
+/* фонарик на металле: темнота мягче, чтобы стол читался */
+.hero-dark { background: radial-gradient(circle at var(--x) var(--y), rgba(0,0,0,0) 0, rgba(0,0,0,0) calc(var(--r) * 0.45), rgba(0,0,0,0.42) calc(var(--r) * 0.78), rgba(0,0,0,0.8) var(--r)); }
+.hero-ui > * { background: rgba(10,10,10,0.72); padding: 7px 10px 6px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+@media (max-width: 760px) { .hero-scroll { display: none; } }
+/* мягкий край стола вместо резкой границы с фоном страницы */
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 90px; z-index: 5; pointer-events: none;
+  background: linear-gradient(180deg, rgba(9,9,9,0), var(--bg)); }
+.posters-teaser .stack { border-block: 0; }
+
+/* =========================================================
+   Светлая тема: наоборот — стол засвечен, а курсор отбрасывает тень,
+   в которой всё видно
+   ========================================================= */
+.hint-light { display: none; }
+[data-theme="light"] .hint-light { display: inline; }
+[data-theme="light"] .hint-dark { display: none; }
+/* тень под курсором: мягкая, с размытой полутенью */
+[data-theme="light"] .hero-dark {
+  mix-blend-mode: multiply;
+  background: radial-gradient(circle at var(--x) var(--y),
+    rgba(22,24,34,0.52) 0, rgba(22,24,34,0.48) calc(var(--r) * 0.6),
+    rgba(22,24,34,0.3) calc(var(--r) * 0.66), rgba(22,24,34,0) calc(var(--r) * 0.71));
+}
+/* засветка вокруг: как пересвеченный кадр — детали выгорают в тёплый белый; граница с тенью резкая */
+[data-theme="light"] .hero-glow {
+  mix-blend-mode: screen;
+  background: radial-gradient(circle at var(--x) var(--y),
+    rgba(255,249,235,0) 0, rgba(255,249,235,0) calc(var(--r) * 0.66),
+    rgba(255,249,235,0.72) calc(var(--r) * 0.74), rgba(255,250,240,0.9) calc(var(--r) * 1.1));
+}
+/* курсор — тёмная точка-«палец», от которой падает тень */
+[data-theme="light"] .hero-cursor { background: var(--black); box-shadow: 0 0 0 3px rgba(255,255,255,0.7), 0 10px 22px 2px rgba(0,0,0,0.35); }
+[data-theme="light"] .hero-hint::before { background: var(--black); box-shadow: none; }
