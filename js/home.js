@@ -35,6 +35,9 @@
   }
   if (!K.reduce) requestAnimationFrame(loop);
 
+  // стрелка внизу первого экрана — к следующему блоку
+  $(".hero-scroll").addEventListener("click", () => scrollTo({ top: hero.offsetTop + hero.offsetHeight, behavior: K.reduce ? "auto" : "smooth" }));
+
   // при скролле темнота рассеивается
   const onScroll = () => hero.style.setProperty("--dark", Math.max(0, 1 - scrollY / (innerHeight * 0.7)).toFixed(3));
   addEventListener("scroll", onScroll, { passive: true }); onScroll();

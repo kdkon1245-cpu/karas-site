@@ -88,19 +88,20 @@
     let pos = 0, target = 0, hover = null, raf = 0, touched = false;
     let W = 300, P = {};
 
-    let vert = false; // телефон: стопка листается снизу вверх
+    let vert = false; // телефон: плакаты по кругу
     function measure() {
       const r = root.getBoundingClientRect();
       const mobile = r.width < 760;
       vert = mobile;
       if (mobile) {
-        // сверху — фильтры и подпись (в галерее), снизу — ползунок; хвост стопки выглядывает снизу
-        const top = compact ? 24 : 212, bot = compact ? 136 : 204;
-        const avail = Math.max(220, r.height - top - bot);
-        W = Math.max(150, Math.min(r.width * (compact ? 0.56 : 0.7), avail / 1.34));
+        // телефон: плакаты стоят по кругу (барабан), в центре — текущий, листается свайпом влево-вправо
+        const top = compact ? 16 : 206, bot = compact ? 74 : 132;
+        const avail = Math.max(240, r.height - top - bot);
+        W = Math.max(140, Math.min(r.width * 0.52, avail / 1.42));
         const H = W * 1.3333;
-        // хвост: каждый следующий плакат чуть меньше и выглядывает снизу на ~10px
-        P = { dx: 0, ds: 0.05, dy: H * 0.025 + 10, bx: 0, by: top + H / 2 - r.height / 2, far: 5, lift: H * 0.7 };
+        // барабан: плакаты стоят встык с небольшим зазором, соседи видны под углом по краям экрана
+        const R = W * 1.45, step = (W * 1.07 / R) * 180 / Math.PI;
+        P = { step, R, by: top + avail / 2 - r.height / 2, far: 1.25, H };
       } else {
         if (compact) W = Math.max(150, Math.min(r.width * 0.17, 260));
         else W = Math.max(180, Math.min(r.width * 0.235, 420, (r.height - 330) / 1.45)); // по высоте окна: плакат не наезжает на подпись
@@ -108,12 +109,13 @@
           // галерея: хвост стопки пологий, чтобы дальние плакаты не уходили за верхний край; подпись — по центру под стопкой
           : { dx: W * 0.34, dy: W * 0.075, dz: W * 0.72, ry: -24, bx: -r.width * 0.1, by: -W * 0.12, far: 11 };
       }
-      root.classList.toggle("stack--vert", vert);
+      root.classList.toggle("stack--ring", vert);
       root.style.setProperty("--sp-w", W + "px");
       // у каждого плаката свои пропорции: площадь примерно одинаковая
       els.forEach((el) => {
         const ar = el._p.ratio || 0.75;
-        const w = W * Math.min(vert ? 1.15 : 1.45, Math.sqrt(ar / 0.75)), h = w / ar;
+        let w = W * Math.min(vert ? 1.12 : 1.45, Math.sqrt(ar / 0.75)), h = w / ar;
+        if (vert && h > P.H * 1.12) { h = P.H * 1.12; w = h * ar; } // высокие плакаты не вылезают за круг
         el.style.width = w.toFixed(1) + "px"; el.style.height = h.toFixed(1) + "px";
         el.style.left = (-w / 2).toFixed(1) + "px"; el.style.top = (-h / 2).toFixed(1) + "px";
       });
@@ -124,12 +126,12 @@
         const rel = k - pos;
         let x, y, z, o = 1, s = 1;
         if (vert) {
-          // следующие ждут снизу, текущий уезжает вверх
-          const rr = Math.max(0, rel);
-          y = P.by + rr * P.dy; z = -rel * 2; s = 1 - Math.min(rr, P.far + 2) * P.ds;
-          if (rel < 0) { y = P.by + rel * P.lift; o = Math.max(0, 1 + rel * 2.2); }
-          else if (rel > P.far) o = Math.max(0, 1 - (rel - P.far) / 1.5);
-          el.style.transform = `translate3d(0px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) scale(${s.toFixed(4)})`;
+          // точка на барабане: угол от центра, радиус R; дальние гаснут, задняя сторона не видна
+          const ang = rel * P.step, rad = ang * Math.PI / 180, ar = Math.abs(rel);
+          x = Math.sin(rad) * P.R; z = (Math.cos(rad) - 1) * P.R; y = P.by;
+          o = ar > P.far ? Math.max(0, 1 - (ar - P.far) / 0.7) : 1;
+          el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${ang.toFixed(2)}deg)`;
+          el.style.setProperty("--d", Math.min(6, ar * 2.4).toFixed(2));
         } else {
           x = P.bx + rel * P.dx; y = P.by - rel * P.dy; z = -rel * P.dz;
           if (rel < 0) { // улетает к зрителю
@@ -140,8 +142,9 @@
           el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${P.ry}deg) scale(${s})`;
         }
         el.style.opacity = o.toFixed(3);
+        el.style.visibility = o < 0.01 ? "hidden" : "";
         el.style.zIndex = String(1000 - k);
-        el.style.setProperty("--d", Math.max(0, Math.min(14, rel)).toFixed(2)); // глубина: для затенения в светлой теме
+        if (!vert) el.style.setProperty("--d", Math.max(0, Math.min(14, rel)).toFixed(2)); // глубина: для затенения в светлой теме
         el.style.pointerEvents = o < 0.3 ? "none" : "";
         el.classList.toggle("is-dim", !!hover && el !== hover);
       });

@@ -285,10 +285,10 @@ html:has(.posters-page) { transition: --va 0.9s ease, --vb 0.9s ease, --vbase 0.
 @media (min-width: 761px) { .stack-title, .stack-count { top: calc(var(--header-h) + 64px); } .stack-count { line-height: 43px; } }
 
 /* ---------- телефон: стопка листается снизу вверх, подпись — сверху ---------- */
-.stack--vert { perspective: none; }
-.stack--vert .stack-scene, .stack--compact.stack--vert .stack-scene { top: 50%; }
-.stack--vert .sp { transform-origin: 50% 100%; box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 10px 24px -6px rgba(0,0,0,0.8); filter: brightness(calc(1 - var(--d, 0) * 0.07)); }
-.stack--compact.stack--vert { cursor: ns-resize; }
+.stack--ring { perspective: 760px; perspective-origin: 50% 40%; }
+.stack--ring .stack-scene, .stack--compact.stack--ring .stack-scene { top: 50%; transform: rotateX(-5deg); }
+.stack--ring .sp { backface-visibility: hidden; -webkit-backface-visibility: hidden; filter: brightness(calc(1 - var(--d, 0) * 0.09)); box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 18px 34px -12px rgba(0,0,0,0.8); }
+.stack--compact.stack--ring { cursor: ew-resize; }
 @media (max-width: 760px) {
   .posters-page .stack-caption { top: calc(var(--header-h) + 60px); bottom: auto; left: var(--gutter); right: var(--gutter); max-width: none; }
   .posters-page .stack-caption .sc-title { margin: 8px 0 8px; font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

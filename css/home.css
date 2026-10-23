@@ -166,3 +166,21 @@
 /* курсор — тёмная точка-«палец», от которой падает тень */
 [data-theme="light"] .hero-cursor { background: var(--black); box-shadow: 0 0 0 3px rgba(255,255,255,0.7), 0 10px 22px 2px rgba(0,0,0,0.35); }
 [data-theme="light"] .hero-hint::before { background: var(--black); box-shadow: none; }
+
+/* стрелка «вниз»: на десктопе — подпись справа, на телефоне — заметная кнопка по центру */
+.hero-scroll { pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; border: 0; cursor: pointer; transition: color 0.2s, background 0.2s; }
+.hero-scroll svg { width: 13px; height: 13px; }
+.hero-scroll:hover { color: var(--ink); }
+@media (max-width: 760px) {
+  .hero-scroll, .hero-ui > .hero-scroll {
+    display: grid; place-items: center; left: 50%; right: auto; bottom: 26px; translate: -50% 0;
+    width: 52px; height: 52px; padding: 0; background: var(--lime); color: #000;
+    box-shadow: 0 10px 30px -8px rgba(0,0,0,0.7); animation: hs-bob 2.2s var(--ease) infinite;
+  }
+  .hero-scroll .hs-t { display: none; }
+  .hero-scroll svg { width: 22px; height: 22px; }
+  /* подсказка — наверх, под шапку */
+  .hero-ui > .hero-hint { top: calc(var(--header-h) + 8px); bottom: auto; font-size: 10px; padding: 6px 9px 5px; }
+}
+@keyframes hs-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .hero-scroll { animation: none !important; } }
