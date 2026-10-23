@@ -295,3 +295,11 @@ html:has(.posters-page) { transition: --va 0.9s ease, --vb 0.9s ease, --vbase 0.
   .posters-page .stack-caption .sc-tags { flex-wrap: nowrap; overflow: hidden; }
   .posters-page .stack-caption .tag { white-space: nowrap; }
 }
+
+/* ---------- главная, телефон: кольцо под наклоном ---------- */
+.stack--compact.stack--loop { height: 300px; perspective: 700px; perspective-origin: 50% 30%; }
+.stack--compact.stack--loop .stack-scene { top: 41%; transform: rotateX(-14deg) rotateZ(-3deg); }
+.stack--loop .sp { filter: brightness(calc(1 - var(--d, 0) * 0.1)); box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 12px 24px -10px rgba(0,0,0,0.8); }
+[data-theme="light"] .stack--loop .sp { filter: brightness(calc(1 - var(--d, 0) * 0.06)); box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 12px 24px -12px rgba(0,0,0,0.45); }
+[data-theme="light"] .stack--loop { background: radial-gradient(ellipse 60% 18% at 50% 82%, rgba(0,0,0,0.1), transparent 70%); }
+.posters-teaser:has(.stack--loop) { padding-bottom: 48px; }

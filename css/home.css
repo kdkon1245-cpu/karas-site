@@ -184,3 +184,18 @@
 }
 @keyframes hs-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 @media (prefers-reduced-motion: reduce) { .hero-scroll { animation: none !important; } }
+
+/* =========================================================
+   Светлая тема, первый экран: без «тени от курсора» —
+   стол просто залит светом, предметы можно двигать
+   ========================================================= */
+[data-theme="light"] .hero-dark, [data-theme="light"] .hero-glow, [data-theme="light"] .hero-cursor { display: none; }
+[data-theme="light"] .hero .t-stage { filter: brightness(1.04) contrast(1.02); }
+[data-theme="light"] .hero-hint .hint-dark { display: none; }
+[data-theme="light"] .hero-hint::before { background: var(--lime); box-shadow: none; }
+[data-theme="light"] .hero.is-over { cursor: grab; }
+[data-theme="light"] .hero { cursor: auto; }
+/* стрелка вниз в светлой теме — чёрная */
+@media (max-width: 760px) {
+  [data-theme="light"] .hero-ui > .hero-scroll { background: #111; color: var(--lime); }
+}

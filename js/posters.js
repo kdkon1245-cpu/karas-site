@@ -93,16 +93,19 @@
       const r = root.getBoundingClientRect();
       const mobile = r.width < 760;
       vert = mobile;
-      if (mobile) {
-        // телефон: плакаты стоят по кругу (барабан), в центре — текущий, листается свайпом влево-вправо
-        const top = compact ? 16 : 206, bot = compact ? 74 : 132;
+      if (mobile && compact) {
+        // главная, телефон: полное кольцо под наклоном — плакаты едут по кругу, передний крупнее
+        const R = Math.min(r.width * 0.41, 190), step = 33;
+        W = R * (step * Math.PI / 180) * 0.92;
+        P = { ring: true, step, R, by: -W * 0.05, far: 180 / step - 0.4, H: W * 1.3333, dragPx: 46 };
+      } else if (mobile) {
+        // галерея, телефон: барабан — текущий плакат в центре, соседи уходят за изгиб
+        const top = 206, bot = 132;
         const avail = Math.max(240, r.height - top - bot);
         W = Math.max(140, Math.min(r.width * 0.52, avail / 1.42));
         const H = W * 1.3333;
-        // барабан: плакаты стоят встык с небольшим зазором, соседи видны под углом по краям экрана
         const R = W * 1.45, step = (W * 1.07 / R) * 180 / Math.PI;
-        P = { step, R, by: top + avail / 2 - r.height / 2, far: 1.25, H };
-      } else {
+        P = { step, R, by: top + avail / 2 - r.height / 2, far: 1.25, H };      } else {
         if (compact) W = Math.max(150, Math.min(r.width * 0.17, 260));
         else W = Math.max(180, Math.min(r.width * 0.235, 420, (r.height - 330) / 1.45)); // по высоте окна: плакат не наезжает на подпись
         P = compact ? { dx: W * 0.46, dy: W * 0.13, dz: W * 0.72, ry: -24, bx: -r.width * 0.3, by: W * 0.05, far: 12 }
@@ -110,6 +113,7 @@
           : { dx: W * 0.34, dy: W * 0.075, dz: W * 0.72, ry: -24, bx: -r.width * 0.1, by: -W * 0.12, far: 11 };
       }
       root.classList.toggle("stack--ring", vert);
+      root.classList.toggle("stack--loop", vert && !!P.ring);
       root.style.setProperty("--sp-w", W + "px");
       // у каждого плаката свои пропорции: площадь примерно одинаковая
       els.forEach((el) => {
@@ -125,7 +129,15 @@
       list.forEach((el, k) => {
         const rel = k - pos;
         let x, y, z, o = 1, s = 1;
-        if (vert) {
+        if (vert && P.ring) {
+          // кольцо: центр кольца в 0, передний плакат ближе к зрителю; задние повёрнуты лицом внутрь — видны сквозь кольцо
+          const ang = rel * P.step, rad = ang * Math.PI / 180, ar = Math.abs(rel), c = Math.cos(rad);
+          x = Math.sin(rad) * P.R; z = c * P.R; y = P.by;
+          o = ar > P.far ? Math.max(0, 1 - (ar - P.far) / 0.6) : 1;
+          const face = Math.abs(((ang % 360) + 540) % 360 - 180) > 90 ? ang + 180 : ang;
+          el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${face.toFixed(2)}deg)`;
+          el.style.setProperty("--d", ((1 - c) * 2.6).toFixed(2));
+        } else if (vert) {
           // точка на барабане: угол от центра, радиус R; дальние гаснут, задняя сторона не видна
           const ang = rel * P.step, rad = ang * Math.PI / 180, ar = Math.abs(rel);
           x = Math.sin(rad) * P.R; z = (Math.cos(rad) - 1) * P.R; y = P.by;
@@ -240,7 +252,7 @@
       const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
       if (Math.hypot(dx, dy) > 6) drag.moved = true;
       const d = Math.abs(dy) > Math.abs(dx) ? -dy : -dx;
-      if (drag.moved) go(drag.t + d / (W * 0.42));
+      if (drag.moved) go(drag.t + (vert && P.ring ? -dx : d) / (P.dragPx || W * 0.42));
     });
     window.addEventListener("pointerup", () => { if (drag) { if (drag.moved) { root._justDragged = true; setTimeout(() => (root._justDragged = false), 60); go(Math.round(target)); } drag = null; } });
 

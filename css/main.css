@@ -740,7 +740,6 @@ body:has(main > .about:last-child) .site-footer { margin-top: 0; border-top: 0; 
 @media (max-width: 760px) {
   .projects-grid, .projects-grid--featured { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 28px 12px; }
   .project-card, .projects-grid--featured .project-card:nth-child(n) { grid-column: auto; }
-  .project-card .cover { aspect-ratio: 1 / 1; }
   .project-card .cover-tags { left: 6px; top: 6px; max-width: calc(100% - 12px); }
   .project-card .cover-tags .tag:nth-child(n + 2) { display: none; }
   .project-card .cover-tags .tag { font-size: 9px; padding: 3px 5px 2px; }
@@ -748,4 +747,76 @@ body:has(main > .about:last-child) .site-footer { margin-top: 0; border-top: 0; 
   .card-title { font-size: 14px; line-height: 1.25; }
   .card-year { font-size: 10px; }
   .card-sub { font-size: 12px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+}
+
+/* =========================================================
+   Бургер — чёрный в обеих темах
+   ========================================================= */
+.menu-btn, [data-theme="light"] .menu-btn { background: #0a0a0a; color: #f2f2f2; }
+
+/* =========================================================
+   СВЕТЛАЯ ТЕМА: лайм на светлом фоне запрещён.
+   Лаймовые заливки → чёрная плашка с лаймовым текстом,
+   лаймовый текст и линии → чёрные. Логотип не трогаем.
+   ========================================================= */
+[data-theme="light"] { --lime-ink: #111; }
+[data-theme="light"] ::selection { background: #111; color: var(--lime); }
+[data-theme="light"] :focus-visible { outline-color: #111; }
+[data-theme="light"] .about-big .plate,
+[data-theme="light"] .write-btn,
+[data-theme="light"] .pill[aria-pressed="true"],
+[data-theme="light"] .link-more:hover,
+[data-theme="light"] .theme-btn:hover,
+[data-theme="light"] .copy-btn:hover, [data-theme="light"] .copy-btn.is-done,
+[data-theme="light"] .prose blockquote.pull,
+[data-theme="light"] .prose a:hover,
+[data-theme="light"] .ss-btn:hover,
+[data-theme="light"] .stack-scrub:hover .ss-thumb span, [data-theme="light"] .stack-scrub.is-active .ss-thumb span,
+[data-theme="light"] .stack-scrub:focus-within .ss-thumb span,
+[data-theme="light"] .next-link:hover .nl-title,
+[data-theme="light"] .back:hover, [data-theme="light"] .case-source a:hover, [data-theme="light"] .footer-row a:hover {
+  background: #111; color: var(--lime); border-color: #111;
+}
+[data-theme="light"] .write-btn:hover { background: #000; color: #fff; }
+[data-theme="light"] .next-link:hover .nl-title { box-shadow: 0 0 0 0.18em #111; }
+[data-theme="light"] .back:hover, [data-theme="light"] .case-source a:hover, [data-theme="light"] .footer-row a:hover { box-shadow: 0 0 0 4px #111; }
+[data-theme="light"] .stack-scrub:hover .ss-fill, [data-theme="light"] .stack-scrub.is-active .ss-fill, [data-theme="light"] .stack-scrub:focus-within .ss-fill { background: #111; }
+[data-theme="light"] .article-row::before { background: #111; }
+[data-theme="light"] .article-row:hover, [data-theme="light"] .article-row:hover * { color: #f2f2f2; }
+[data-theme="light"] .article-row:hover .tag { background: rgba(255,255,255,0.14); color: #f2f2f2; }
+[data-theme="light"] .shutters i:nth-child(5) { background: #111; }
+[data-theme="light"] .prose li::marker, [data-theme="light"] .prose ol.chips li::before,
+[data-theme="light"] .toc summary, [data-theme="light"] .prose h4, [data-theme="light"] .prose a,
+[data-theme="light"] .toc li a.is-active, [data-theme="light"] .stack-caption .sc-num, [data-theme="light"] .stack-count b { color: #111; }
+[data-theme="light"] .toc li a.is-active,
+[data-theme="light"] .prose blockquote, [data-theme="light"] .prose .prompt-block,
+[data-theme="light"] .prose .aside { border-left-color: #111; }
+[data-theme="light"] .prose .cta:not(.cta--nav) { border-color: #111; }
+[data-theme="light"] .footer-row a:hover { color: var(--lime); }
+
+/* =========================================================
+   Плакаты: пока только OVERVIEW — переключатель и архив скрыты
+   ========================================================= */
+.view-toggle, .posters-page .index-wrap { display: none !important; }
+
+/* =========================================================
+   Главная: кнопка раздела — справа от заголовка и на телефоне
+   ========================================================= */
+@media (max-width: 760px) {
+  .section-head { flex-wrap: nowrap; align-items: center; }
+  .section-head .link-more { flex: none; padding: 10px 10px; font-size: 11px; gap: 6px; }
+  .section-head .link-more svg { width: 12px; height: 12px; }
+}
+
+/* =========================================================
+   Статья: содержание всегда видно; «Скопировать» — под текстом промта
+   ========================================================= */
+.prose figcaption.prompt, .prose .prompt-block { grid-template-columns: minmax(0, 1fr) !important; gap: 10px; }
+.prose figcaption.prompt .tag, .prose .prompt-block .tag { grid-column: 1 / -1; justify-self: start; }
+.copy-btn { justify-self: start; }
+.toc { margin-top: 8px; }
+@media (max-width: 860px) {
+  .toc { margin: 8px 0 12px; padding: 16px 16px 12px; background: var(--panel); border: 1px solid var(--line); }
+  .toc summary { margin-bottom: 12px; }
+  .toc li a { font-size: 15px; padding-block: 8px; }
 }

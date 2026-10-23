@@ -149,7 +149,6 @@
         };
         addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
         update();
-        if (innerWidth < 860) main.querySelector(".toc details")?.removeAttribute("open");
       }
     };
 
