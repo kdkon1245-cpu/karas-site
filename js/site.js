@@ -54,7 +54,7 @@
       <svg class="ti-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.6A8.5 8.5 0 0 1 9.4 4a8.5 8.5 0 1 0 10.6 10.6Z"/></svg>
       <span class="theme-label"></span>
     </button>
-    <button class="menu-btn" aria-expanded="false" aria-controls="mobile-menu">Меню</button>`;
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню"><i></i><i></i></button>`;
   document.body.prepend(header);
 
   const mm = document.createElement("div");
@@ -62,16 +62,25 @@
   mm.innerHTML = `
     <a href="index.html"${cur("home")}>Главная</a>
     ${NAV.map((n) => `<a href="${n.href}"${cur(n.id)}>${n.label}${n.n ? `<sup>${pad(n.n)}</sup>` : ""}</a>`).join("")}
+    <div class="mm-theme" role="group" aria-label="Тема">
+      <span class="mm-theme-l">Тема</span>
+      <button type="button" data-set-theme="dark">Тёмная</button><button type="button" data-set-theme="light">Светлая</button>
+    </div>
     <div class="mm-foot">${D.site.contacts.slice(0, 2).map((c) => `<a href="${esc(c.href)}" style="font:inherit;border:0;padding:0;text-transform:none">${esc(c.value)}</a>`).join("")}</div>`;
   header.after(mm);
   const mbtn = header.querySelector(".menu-btn");
   mbtn.addEventListener("click", () => {
     const open = mm.classList.toggle("is-open");
     mbtn.setAttribute("aria-expanded", open);
-    mbtn.textContent = open ? "Закрыть" : "Меню";
+    mbtn.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+    document.body.classList.toggle("menu-open", open);
     document.body.style.overflow = open ? "hidden" : "";
   });
-  mm.addEventListener("click", (e) => { if (e.target.closest("a")) { mm.classList.remove("is-open"); document.body.style.overflow = ""; mbtn.textContent = "Меню"; } });
+  mm.addEventListener("click", (e) => {
+    const tb = e.target.closest("[data-set-theme]");
+    if (tb) { setTheme(tb.dataset.setTheme); return; }
+    if (e.target.closest("a")) { mm.classList.remove("is-open"); document.body.classList.remove("menu-open"); document.body.style.overflow = ""; mbtn.setAttribute("aria-expanded", false); mbtn.setAttribute("aria-label", "Открыть меню"); }
+  });
 
   /* ---------- тема: тёмная / светлая ---------- */
   const themeBtn = header.querySelector(".theme-btn");
@@ -81,15 +90,17 @@
     themeBtn.querySelector(".theme-label").textContent = t === "light" ? "Тёмная" : "Светлая";
     themeBtn.setAttribute("aria-pressed", t === "light");
     if (metaTheme) metaTheme.content = t === "light" ? "#efeee9" : "#000000";
+    mm.querySelectorAll("[data-set-theme]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.setTheme === t));
   };
-  applyTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
-  themeBtn.addEventListener("click", () => {
-    const t = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+  const setTheme = (t) => {
+    if ((document.documentElement.dataset.theme === "light" ? "light" : "dark") === t) return;
     document.documentElement.classList.add("theme-anim");
     applyTheme(t);
     try { localStorage.setItem("karas-theme", t); } catch (e) {}
     setTimeout(() => document.documentElement.classList.remove("theme-anim"), 500);
-  });
+  };
+  applyTheme(document.documentElement.dataset.theme === "light" ? "light" : "dark");
+  themeBtn.addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "light" ? "dark" : "light"));
 
   /* ---------- глаз следит за курсором ---------- */
   (function eye() {

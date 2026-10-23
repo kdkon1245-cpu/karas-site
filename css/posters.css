@@ -283,3 +283,15 @@ html:has(.posters-page) { transition: --va 0.9s ease, --vb 0.9s ease, --vbase 0.
 [data-theme="light"] .stack-caption .tag:not(.tag--steel) { background: rgba(0,0,0,0.07); color: #3a3f4a; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
 /* заголовок «Плакаты» и счётчик — на том же расстоянии от шапки, что на «Проектах» и «Статьях» */
 @media (min-width: 761px) { .stack-title, .stack-count { top: calc(var(--header-h) + 64px); } .stack-count { line-height: 43px; } }
+
+/* ---------- телефон: стопка листается снизу вверх, подпись — сверху ---------- */
+.stack--vert { perspective: none; }
+.stack--vert .stack-scene, .stack--compact.stack--vert .stack-scene { top: 50%; }
+.stack--vert .sp { transform-origin: 50% 100%; box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 10px 24px -6px rgba(0,0,0,0.8); filter: brightness(calc(1 - var(--d, 0) * 0.07)); }
+.stack--compact.stack--vert { cursor: ns-resize; }
+@media (max-width: 760px) {
+  .posters-page .stack-caption { top: calc(var(--header-h) + 60px); bottom: auto; left: var(--gutter); right: var(--gutter); max-width: none; }
+  .posters-page .stack-caption .sc-title { margin: 8px 0 8px; font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .posters-page .stack-caption .sc-tags { flex-wrap: nowrap; overflow: hidden; }
+  .posters-page .stack-caption .tag { white-space: nowrap; }
+}

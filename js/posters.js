@@ -88,21 +88,32 @@
     let pos = 0, target = 0, hover = null, raf = 0, touched = false;
     let W = 300, P = {};
 
+    let vert = false; // телефон: стопка листается снизу вверх
     function measure() {
       const r = root.getBoundingClientRect();
       const mobile = r.width < 760;
-      if (compact) W = Math.max(150, Math.min(r.width * (mobile ? 0.38 : 0.17), 260));
-      else W = Math.max(180, Math.min(r.width * (mobile ? 0.58 : 0.235), 420, (r.height - (mobile ? 420 : 330)) / 1.45)); // по высоте окна: плакат не наезжает на подпись
-      P = mobile
-        ? { dx: W * 0.15, dy: W * (compact ? 0.13 : 0.09), dz: W * 0.62, ry: -14, bx: -W * 0.12, by: compact ? W * 0.05 : -W * 0.08, far: 9 } // телефон: пологий хвост — не лезет под фильтры и не наезжает на слайдер
-        : compact ? { dx: W * 0.46, dy: W * 0.13, dz: W * 0.72, ry: -24, bx: -r.width * 0.3, by: W * 0.05, far: 12 }
+      vert = mobile;
+      if (mobile) {
+        // сверху — фильтры и подпись (в галерее), снизу — ползунок; хвост стопки выглядывает снизу
+        const top = compact ? 24 : 212, bot = compact ? 136 : 204;
+        const avail = Math.max(220, r.height - top - bot);
+        W = Math.max(150, Math.min(r.width * (compact ? 0.56 : 0.7), avail / 1.34));
+        const H = W * 1.3333;
+        // хвост: каждый следующий плакат чуть меньше и выглядывает снизу на ~10px
+        P = { dx: 0, ds: 0.05, dy: H * 0.025 + 10, bx: 0, by: top + H / 2 - r.height / 2, far: 5, lift: H * 0.7 };
+      } else {
+        if (compact) W = Math.max(150, Math.min(r.width * 0.17, 260));
+        else W = Math.max(180, Math.min(r.width * 0.235, 420, (r.height - 330) / 1.45)); // по высоте окна: плакат не наезжает на подпись
+        P = compact ? { dx: W * 0.46, dy: W * 0.13, dz: W * 0.72, ry: -24, bx: -r.width * 0.3, by: W * 0.05, far: 12 }
           // галерея: хвост стопки пологий, чтобы дальние плакаты не уходили за верхний край; подпись — по центру под стопкой
           : { dx: W * 0.34, dy: W * 0.075, dz: W * 0.72, ry: -24, bx: -r.width * 0.1, by: -W * 0.12, far: 11 };
+      }
+      root.classList.toggle("stack--vert", vert);
       root.style.setProperty("--sp-w", W + "px");
       // у каждого плаката свои пропорции: площадь примерно одинаковая
       els.forEach((el) => {
         const ar = el._p.ratio || 0.75;
-        const w = W * Math.min(1.45, Math.sqrt(ar / 0.75)), h = w / ar;
+        const w = W * Math.min(vert ? 1.15 : 1.45, Math.sqrt(ar / 0.75)), h = w / ar;
         el.style.width = w.toFixed(1) + "px"; el.style.height = h.toFixed(1) + "px";
         el.style.left = (-w / 2).toFixed(1) + "px"; el.style.top = (-h / 2).toFixed(1) + "px";
       });
@@ -111,14 +122,25 @@
     function layout() {
       list.forEach((el, k) => {
         const rel = k - pos;
-        let x = P.bx + rel * P.dx, y = P.by - rel * P.dy, z = -rel * P.dz, o = 1, s = 1;
-        if (rel < 0) { // улетает к зрителю
-          x += rel * P.dx * 1.4; y -= rel * P.dy * 1.6; z = -rel * P.dz * 2.1;
-          o = Math.max(0, 1 + rel * (compact ? 2.4 : 2)); // уходящий плакат гаснет быстро — не спорит с подписью слева
-        } else if (rel > P.far) o = Math.max(0, 1 - (rel - P.far) / 3);
-        if (el === hover) { y -= W * 0.03; z += W * 0.3; s = 1.02; }
-        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${P.ry}deg) scale(${s})`;
+        let x, y, z, o = 1, s = 1;
+        if (vert) {
+          // следующие ждут снизу, текущий уезжает вверх
+          const rr = Math.max(0, rel);
+          y = P.by + rr * P.dy; z = -rel * 2; s = 1 - Math.min(rr, P.far + 2) * P.ds;
+          if (rel < 0) { y = P.by + rel * P.lift; o = Math.max(0, 1 + rel * 2.2); }
+          else if (rel > P.far) o = Math.max(0, 1 - (rel - P.far) / 1.5);
+          el.style.transform = `translate3d(0px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) scale(${s.toFixed(4)})`;
+        } else {
+          x = P.bx + rel * P.dx; y = P.by - rel * P.dy; z = -rel * P.dz;
+          if (rel < 0) { // улетает к зрителю
+            x += rel * P.dx * 1.4; y -= rel * P.dy * 1.6; z = -rel * P.dz * 2.1;
+            o = Math.max(0, 1 + rel * (compact ? 2.4 : 2)); // уходящий плакат гаснет быстро — не спорит с подписью слева
+          } else if (rel > P.far) o = Math.max(0, 1 - (rel - P.far) / 3);
+          if (el === hover) { y -= W * 0.03; z += W * 0.3; s = 1.02; }
+          el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${P.ry}deg) scale(${s})`;
+        }
         el.style.opacity = o.toFixed(3);
+        el.style.zIndex = String(1000 - k);
         el.style.setProperty("--d", Math.max(0, Math.min(14, rel)).toFixed(2)); // глубина: для затенения в светлой теме
         el.style.pointerEvents = o < 0.3 ? "none" : "";
         el.classList.toggle("is-dim", !!hover && el !== hover);
