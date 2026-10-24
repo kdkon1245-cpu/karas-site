@@ -175,9 +175,44 @@
         <span class="footer-links">${D.site.contacts.map((c) => `<a href="${esc(c.href)}" target="_blank" rel="noopener">${esc(c.label)}</a>`).join("")}</span>
       </div>
       <div class="footer-word">${wordSVG}</div>
-      <div class="footer-row"><span>© ${new Date().getFullYear()} KARAS</span><span>${esc(D.site.city)}</span></div>
+      <div class="footer-row"><span>© ${new Date().getFullYear()} KARAS</span>
+        <span class="footer-links"><a href="privacy.html">Политика конфиденциальности</a><button type="button" class="footer-cookie" data-cookie-settings>Cookie</button><span>${esc(D.site.city)}</span></span></div>
     </div>`;
   document.body.append(footer);
+
+  /* ---------- cookie: Яндекс Метрика только с согласия ----------
+     выбор хранится в localStorage («yes|время» / «no|время») и спрашивается снова через год.
+     сам счётчик (window.karasMetrika) вставляет в опубликованные страницы _tools/seo.py */
+  (function consent() {
+    const KEY = "karas-consent", YEAR = 365 * 24 * 3600 * 1000;
+    const read = () => { try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; } };
+    const write = (v) => { try { localStorage.setItem(KEY, `${v}|${Date.now()}`); } catch (e) {} };
+    let bar = null;
+    function hide() { if (!bar) return; bar.classList.remove("is-open"); const b = bar; bar = null; setTimeout(() => b.remove(), 400); }
+    function show() {
+      if (bar) return;
+      bar = document.createElement("div");
+      bar.className = "cookie-bar"; bar.setAttribute("role", "dialog"); bar.setAttribute("aria-label", "Cookie и аналитика");
+      bar.innerHTML = `
+        <p>Сайт использует cookie и Яндекс Метрику, чтобы понимать, какие работы смотрят. Нажимая «Принять», вы даёте
+          <a href="consent.html">согласие на обработку данных</a>. Подробнее — в <a href="privacy.html">политике конфиденциальности</a>.</p>
+        <div class="cookie-actions">
+          <button type="button" class="cookie-yes">Принять</button>
+          <button type="button" class="cookie-no">Отказаться</button>
+        </div>`;
+      document.body.append(bar);
+      requestAnimationFrame(() => requestAnimationFrame(() => bar && bar.classList.add("is-open")));
+      bar.querySelector(".cookie-yes").onclick = () => { write("yes"); hide(); window.karasMetrika && window.karasMetrika(); };
+      bar.querySelector(".cookie-no").onclick = () => {
+        const was = /^yes[|]/.test(read());
+        write("no"); hide();
+        if (was) location.reload(); // отозвали согласие — перезагружаем страницу без счётчика
+      };
+    }
+    const [v, t] = read().split("|");
+    if (!v || !(Date.now() - +t < YEAR)) setTimeout(show, 900);
+    document.addEventListener("click", (e) => { if (e.target.closest("[data-cookie-settings]")) { e.preventDefault(); show(); } });
+  })();
 
   /* ---------- появление: шторки и reveal ---------- */
   const io = "IntersectionObserver" in window && !reduce
