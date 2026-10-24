@@ -758,6 +758,17 @@ window.KARAS_DATA = {
 
   articles: [
     {
+      id: "kak-sdelat-portfolio",
+      title: "Как сделать сайт-портфолио: от контента до своего домена",
+      date: "2026-10-24",
+      author: "Karas Studio",
+      tags: ["Нейросети", "Гайд", "Сайт"],
+      read: 12,
+      cover: "content/articles/kak-sdelat-portfolio/banner.webp",
+      lead: "Как собрать свой сайт с помощью нейросети, без кода и конструкторов: контент, референсы, промты, мобильная версия и публикация на свой домен.",
+      bodyScript: "content/articles/kak-sdelat-portfolio/article.js",
+    },
+    {
       id: "nano-banana-2",
       title: "Как генерировать изображение в Nano Banana: референсы, объединение Ч.2",
       date: "2026-01-21",
