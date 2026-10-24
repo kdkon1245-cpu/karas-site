@@ -31,7 +31,7 @@
     const p = D.projects[i];
     const main = $("main");
     if (!p) { main.innerHTML = notFound("Проект", "projects.html", "Все проекты"); return; }
-    document.title = `${p.title} — KARAS`;
+    if (!window.KARAS_ID) document.title = `${p.title} — KARAS`; // у готовых страниц заголовок уже в HTML
     K.setBg(p.bg);
     const next = D.projects[(i + 1) % D.projects.length];
     const fact = (k, v) => (v ? `<div><dt>${k}</dt><dd>${v}</dd></div>` : "");
@@ -66,7 +66,7 @@
         </div>` : ""}
         ${flow ? `<div class="case-flow">${flow}</div>` : legacy}
         ${p.source ? `<p class="case-source mono"><a href="${K.esc(p.source)}" target="_blank" rel="noopener">Этот кейс на Dprofile ${K.arrow}</a></p>` : ""}
-        <a class="next-link" href="project.html?id=${encodeURIComponent(next.id)}">
+        <a class="next-link" href="${K.url.project(next.id)}">
           <span class="mono muted">Следующий проект</span><span class="nl-title">${K.esc(next.title)} →</span>
         </a>
       </article>`;
@@ -88,7 +88,7 @@
     const a = D.articles[i];
     const main = $("main");
     if (!a) { main.innerHTML = notFound("Материал", "articles.html", "Все статьи"); return; }
-    document.title = `${a.title} — KARAS`;
+    if (!window.KARAS_ID) document.title = `${a.title} — KARAS`;
     const next = D.articles.length > 1 ? D.articles[(i + 1) % D.articles.length] : null;
     // короткие черновые статьи хранятся прямо в data.js (body), длинные — в отдельном файле (bodyScript)
     const block = (b) =>
@@ -115,7 +115,7 @@
             </aside>
             <div class="prose">${rich ? rich.html : a.body.map(block).join("")}</div>
           </div>
-          ${next ? `<a class="next-link" href="article.html?id=${encodeURIComponent(next.id)}">
+          ${next ? `<a class="next-link" href="${K.url.article(next.id)}">
             <span class="mono muted">Дальше читать</span><span class="nl-title" style="font-size:clamp(22px,3.4vw,48px)">${K.esc(next.title)} →</span>
           </a>` : ""}
         </article>`;

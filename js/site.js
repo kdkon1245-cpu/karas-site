@@ -16,7 +16,32 @@
   const months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
   const fmtDate = (iso) => { const d = new Date(iso + "T12:00:00"); return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`; };
   const arrow = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 16 16 4M7 4h9v9"/></svg>`;
-  const qs = (k) => new URLSearchParams(location.search).get(k);
+  const qs = (k) => new URLSearchParams(location.search).get(k) ?? (k === "id" ? window.KARAS_ID || null : null);
+
+  /* ---------- адреса страниц ----------
+     на опубликованном сайте у каждого проекта и статьи — своя готовая страница (/project/id/, /article/id/),
+     её собирает _tools/seo.py; локально работают обычные project.html?id=… */
+  const CLEAN = /^https?:$/.test(location.protocol) && !!document.querySelector('meta[name="karas-clean"]');
+  const url = {
+    project: (id) => (CLEAN ? `/project/${encodeURIComponent(id)}/` : `project.html?id=${encodeURIComponent(id)}`),
+    article: (id) => (CLEAN ? `/article/${encodeURIComponent(id)}/` : `article.html?id=${encodeURIComponent(id)}`),
+  };
+  // старые адреса вида project.html?id=… переводим на постоянные
+  if (CLEAN && !window.KARAS_ID && (page === "project" || page === "article")) {
+    const id = new URLSearchParams(location.search).get("id");
+    const list = page === "project" ? D.projects : D.articles;
+    if (id && list.some((x) => x.id === id)) location.replace(url[page](id) + location.hash);
+  }
+  // ссылки-якоря (#раздел) — прокрутка на месте, даже если у страницы задан <base>
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || a.getAttribute("href").length < 2) return;
+    const el = document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));
+    if (!el) return;
+    e.preventDefault();
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+    history.replaceState(null, "", location.pathname + location.search + a.getAttribute("href"));
+  });
 
   /* ---------- шапка ---------- */
   const NAV = [
@@ -166,7 +191,7 @@
   function projectCard(p, i) {
     const delays = [0, 90, 160, 60, 220].map((d) => d + Math.round(Math.random() * 120));
     return `
-      <a class="project-card js-reveal" href="project.html?id=${encodeURIComponent(p.id)}" data-tags="${esc(p.tags.join("|"))}">
+      <a class="project-card js-reveal" href="${url.project(p.id)}" data-tags="${esc(p.tags.join("|"))}">
         <div class="cover">
           ${window.KARAS_MEDIA(p, 400, 300)}
           <div class="shutters">${delays.map((d) => `<i style="--d:${d}ms"></i>`).join("")}</div>
@@ -182,7 +207,7 @@
   }
   function articleRow(a, i) {
     return `
-      <a class="article-row" href="article.html?id=${encodeURIComponent(a.id)}">
+      <a class="article-row" href="${url.article(a.id)}">
         <span class="mono muted">${pad(i + 1, 3)}</span>
         <h3>${esc(a.title)}</h3>
         <span class="ar-tags">${a.tags.map((t) => `<span class="tag tag--steel">${esc(t)}</span>`).join("")}</span>
@@ -224,6 +249,6 @@
   addEventListener("scroll", onScrollBg, { passive: true });
   addEventListener("load", onScrollBg); onScrollBg();
 
-  window.KARAS = { setBg, D, esc, pad, fmtDate, arrow, qs, observe, projectCard, articleRow, pills, reduce, wordSVG, eyeSVG };
+  window.KARAS = { setBg, D, esc, pad, fmtDate, arrow, qs, url, observe, projectCard, articleRow, pills, reduce, wordSVG, eyeSVG };
   document.addEventListener("DOMContentLoaded", () => observe());
 })();
