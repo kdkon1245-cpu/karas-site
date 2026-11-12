@@ -33,6 +33,122 @@ window.KARAS_DATA = {
      cover — превью для карточки, image — большая обложка. */
   projects: [
     {
+      "id": "ulan-sans",
+      "bg": {
+        "a": "#ea1d59",
+        "b": "#0f7fe6",
+        "base": "#16070c"
+      },
+      "title": "Ulan Sans",
+      "subtitle": "Шрифт для кириллицы, латиницы и бурятского языка",
+      "year": 2026,
+      "client": "Магистерская диссертация, РГУ им. А.Н. Косыгина",
+      "role": "Шрифт",
+      "tags": [
+        "Шрифт",
+        "Типографика"
+      ],
+      "featured": true,
+      "cover": "content/projects/ulan-sans/cover-s.webp",
+      "image": "content/projects/ulan-sans/cover.webp",
+      "lead": "Ulan Sans — геометрический гротеск для кириллицы, латиницы и бурятского языка. Его пластика переосмысляет старомонгольское вертикальное письмо: прямая стойка, овальная чаша и единый угол наклона 15°.",
+      "body": [
+        "Шрифт создан в рамках магистерской диссертации в РГУ им. А.Н. Косыгина как часть концепции айдентики Улан-Удэ, затем доработан как самостоятельная гарнитура.",
+        "179 знаков, включая бурятские Ө, Ү, Һ, 1469 кернинговых пар, форматы OTF, TTF, WOFF и WOFF2.",
+        "Бесплатно для личного и некоммерческого использования. Коммерческая лицензия — по запросу в Telegram @karas_dsgn."
+      ],
+      "blocks": [
+        {
+          "img": "content/projects/ulan-sans/01.webp",
+          "w": 1920,
+          "h": 2167
+        },
+        {
+          "img": "content/projects/ulan-sans/02.webp",
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "img": "content/projects/ulan-sans/03.webp",
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "video": "https://kinescope.io/embed/ogvh5G6i4BkGgYHbQagoif",
+          "w": 3840,
+          "h": 3728
+        },
+        {
+          "img": "content/projects/ulan-sans/04.webp",
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "img": "content/projects/ulan-sans/05.webp",
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "img": "content/projects/ulan-sans/06.webp",
+          "w": 1920,
+          "h": 1456
+        },
+        {
+          "img": "content/projects/ulan-sans/07.webp",
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "video": "https://kinescope.io/embed/kbwojJjGxmd95wQ6mwUPHT",
+          "w": 3840,
+          "h": 2160
+        },
+        {
+          "img": "content/projects/ulan-sans/08.webp",
+          "w": 1920,
+          "h": 1080
+        },
+        {
+          "img": "content/projects/ulan-sans/09.webp",
+          "w": 1920,
+          "h": 2978
+        },
+        {
+          "img": "content/projects/ulan-sans/10.webp",
+          "w": 1920,
+          "h": 1902
+        },
+        {
+          "video": "https://kinescope.io/embed/rzEKdN3AxABiSVudGYDKxV",
+          "w": 1920,
+          "h": 1864
+        },
+        {
+          "img": "content/projects/ulan-sans/11.webp",
+          "w": 1920,
+          "h": 2457
+        },
+        {
+          "img": "content/projects/ulan-sans/12.webp",
+          "w": 1920,
+          "h": 1175
+        }
+      ],
+      "source": "https://dprofile.ru/case/199931/ulan-sans-srift",
+      "links": [
+        {
+          "label": "Скачать шрифт (ZIP)",
+          "href": "downloads/UlanSans-2.21.zip",
+          "download": true
+        },
+        {
+          "label": "Лицензия",
+          "href": "ulan-sans-license.html",
+          "internal": true
+        }
+      ]
+    },
+    {
       "id": "zaichik",
       "bg": { "a": "#cc6821", "b": "#9fc21d", "base": "#120c08" },
       "title": "Зайчик, не беги",

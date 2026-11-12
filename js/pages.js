@@ -36,7 +36,7 @@
     const next = D.projects[(i + 1) % D.projects.length];
     const fact = (k, v) => (v ? `<div><dt>${k}</dt><dd>${v}</dd></div>` : "");
     const hasBody = !!(p.body && p.body.length); // нет описания — кнопки ставим под вводный текст, без пустого блока «О проекте»
-    const links = (p.links || []).map((l) => `<a class="link-more" href="${K.esc(l.href)}" target="_blank" rel="noopener">${K.esc(l.label)} ${K.arrow}</a>`).join("");
+    const links = (p.links || []).map((l) => `<a class="link-more" href="${K.esc(l.href)}"${l.download ? " download" : l.internal ? "" : ' target="_blank" rel="noopener"'}>${K.esc(l.label)} ${K.arrow}</a>`).join("");
     // содержимое кейса: картинки и видео по порядку (как на Dprofile)
     const flow = (p.blocks || []).map((b, k) => {
       if (b.img) return `<figure class="cf-item"><img src="${K.esc(b.img)}" width="${b.w}" height="${b.h}" alt="${K.esc(p.title)} — изображение ${k + 1}" loading="${k < 2 ? "eager" : "lazy"}" decoding="async"></figure>`;

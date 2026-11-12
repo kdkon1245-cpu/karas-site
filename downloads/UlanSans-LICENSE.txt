@@ -1,0 +1,132 @@
+Ulan Sans — лицензионное соглашение / License Agreement
+Copyright © 2026 Ivan Karas (KARAS). All rights reserved.
+Иван Карась (KARAS) — автор и правообладатель шрифта Ulan Sans.
+
+Контакты / Contacts
+Сайт / Web:      https://ivankaras.ru
+Telegram:        @karas_dsgn (https://t.me/karas_dsgn)
+Email:           kdivan.12@yandex.ru
+
+
+==================================================================
+ПО-РУССКИ
+==================================================================
+
+1. Что можно бесплатно
+   Шрифт Ulan Sans можно бесплатно устанавливать и использовать
+   в личных и некоммерческих целях: личные проекты, учёба,
+   некоммерческие публикации, собственное портфолио.
+
+2. Коммерческое использование — по отдельной лицензии
+   Для любого коммерческого использования нужна лицензия автора:
+   клиентские и заказные проекты, логотипы и фирменный стиль,
+   реклама, упаковка, товары на продажу, сайты и приложения
+   организаций, видео и публикации с монетизацией.
+   Условия и стоимость — по запросу через контакты выше.
+
+3. Государственные и муниципальные заказчики
+   Использование шрифта органами государственной и муниципальной
+   власти, подведомственными им учреждениями и предприятиями,
+   а также в айдентике, навигации и коммуникациях городов
+   и регионов — в том числе подрядчиками, выполняющими такие
+   заказы, — допускается только по письменному разрешению автора.
+   Это условие действует и для некоммерческих целей.
+
+4. Распространение файлов (каталоги, сайты, Telegram-каналы)
+   Файлы шрифта можно бесплатно публиковать и распространять,
+   например в каталогах шрифтов и Telegram-каналах вроде
+   «Бесплатные шрифты», при соблюдении всех условий:
+   - автор уведомлён о публикации: сообщение в Telegram
+     @karas_dsgn или на kdivan.12@yandex.ru;
+   - в публикации указан автор и дана ссылка на него:
+     «Ulan Sans — Иван Карась (KARAS), https://ivankaras.ru»;
+   - в публикации указано, что шрифт бесплатен только для личного
+     и некоммерческого использования, а коммерческая лицензия —
+     по запросу у автора;
+   - файлы распространяются без изменений, вместе с этим файлом
+     LICENSE.txt и бесплатно: без платного доступа, подписки
+     или продажи.
+
+5. Что запрещено без письменного разрешения автора
+   - продавать или сдавать в аренду файлы шрифта, в том числе
+     в изменённом виде или в составе платных наборов;
+   - распространять шрифт с нарушением условий пункта 4
+     или в изменённом виде;
+   - выдавать шрифт или производные от него за свою работу
+     и распространять их под другим названием;
+   - встраивать шрифт в сайты, приложения и документы так,
+     чтобы файлы шрифта можно было извлечь, кроме личных
+     некоммерческих проектов.
+
+6. Авторство
+   Права на шрифт и его рисунок принадлежат автору.
+   Использование шрифта не передаёт пользователю права на него.
+
+7. Без гарантий
+   Шрифт предоставляется «как есть», без каких-либо гарантий.
+   Автор не несёт ответственности за последствия его использования.
+
+Установка или использование шрифта означает согласие
+с условиями этого соглашения.
+
+
+==================================================================
+IN ENGLISH
+==================================================================
+
+1. Free use
+   Ulan Sans may be installed and used free of charge for personal
+   and non-commercial purposes: personal projects, study,
+   non-commercial publications and your own portfolio.
+
+2. Commercial use requires a separate license
+   Any commercial use requires a license from the author: client
+   and commissioned work, logos and brand identities, advertising,
+   packaging, products for sale, websites and apps of organisations,
+   monetised videos and publications.
+   Terms and pricing on request via the contacts above.
+
+3. Government and municipal clients
+   Use of the typeface by state and municipal authorities, their
+   subordinate institutions and enterprises, and in the identity,
+   wayfinding and communications of cities and regions — including
+   by contractors working on such commissions — is permitted only
+   with the author's written permission. This applies to
+   non-commercial use as well.
+
+4. Redistribution (font catalogues, websites, Telegram channels)
+   The font files may be published and redistributed free of
+   charge, e.g. in font catalogues and "free fonts" Telegram
+   channels, provided that all of the following are met:
+   - the author is notified of the publication via Telegram
+     @karas_dsgn or kdivan.12@yandex.ru;
+   - the publication credits the author with a link:
+     "Ulan Sans by Ivan Karas (KARAS), https://ivankaras.ru";
+   - the publication states that the typeface is free for personal
+     and non-commercial use only and that commercial licenses
+     are available from the author;
+   - the files are distributed unmodified, together with this
+     LICENSE.txt, and free of charge: no paywall, subscription
+     or sale.
+
+5. Not permitted without the author's written permission
+   - selling or renting the font files, including modified
+     versions or as part of paid bundles;
+   - redistributing the typeface in breach of section 4
+     or in modified form;
+   - presenting the typeface or derivatives as your own work
+     or distributing them under another name;
+   - embedding the typeface in websites, apps or documents in a way
+     that allows the font files to be extracted, except for
+     personal non-commercial projects.
+
+6. Ownership
+   All rights to the typeface and its design belong to the author.
+   Using the typeface does not transfer any rights to the user.
+
+7. No warranty
+   The typeface is provided "as is", without warranty of any kind.
+   The author is not liable for any consequences of its use.
+
+Installing or using the typeface means you accept the terms
+of this agreement.
