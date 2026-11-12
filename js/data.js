@@ -449,8 +449,9 @@ window.KARAS_DATA = {
       "source": "https://dprofile.ru/case/98550/srift-s-xarakterom-monolit",
       "links": [
         {
-          "label": "Скачать шрифт",
-          "href": "https://t.me/karas_studio/100"
+          "label": "Скачать шрифт (TTF)",
+          "href": "downloads/Monolit.zip",
+          "download": true
         }
       ]
     },

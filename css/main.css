@@ -928,3 +928,8 @@ body:has(main > .about:last-child) .site-footer { margin-top: 0; border-top: 0; 
 .legal { max-width: 760px; }
 .legal h1 { margin: 24px 0 8px; }
 .legal .legal-date { margin: 0 0 40px; font-size: 13px; text-transform: uppercase; }
+
+/* кнопка скачивания по ссылке #download */
+.link-more.is-target { background: var(--lime); color: var(--black); border-color: var(--lime); animation: karas-dl-pulse 1.2s ease-out 4; }
+@keyframes karas-dl-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--lime) 70%, transparent); } 100% { box-shadow: 0 0 0 18px transparent; } }
+@media (prefers-reduced-motion: reduce) { .link-more.is-target { animation: none; } }

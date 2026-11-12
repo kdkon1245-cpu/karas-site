@@ -36,6 +36,8 @@
     const next = D.projects[(i + 1) % D.projects.length];
     const fact = (k, v) => (v ? `<div><dt>${k}</dt><dd>${v}</dd></div>` : "");
     const hasBody = !!(p.body && p.body.length); // нет описания — кнопки ставим под вводный текст, без пустого блока «О проекте»
+    // кнопка скачивания должна быть видна сразу — такие ссылки ставим под вводный текст
+    const headLinks = !!(p.links || []).length && (!hasBody || (p.links || []).some((l) => l.download));
     const links = (p.links || []).map((l) => `<a class="link-more" href="${K.esc(l.href)}"${l.download ? " download" : l.internal ? "" : ' target="_blank" rel="noopener"'}>${K.esc(l.label)} ${K.arrow}</a>`).join("");
     // содержимое кейса: картинки и видео по порядку (как на Dprofile)
     const flow = (p.blocks || []).map((b, k) => {
@@ -54,7 +56,7 @@
             <div class="cover-tags" style="position:static;margin-bottom:18px">${p.tags.map((t) => `<span class="tag">${K.esc(t)}</span>`).join("")}</div>
             <h1 class="detail-title project-title">${K.esc(p.title)}</h1>
             <p class="detail-lead">${K.esc(p.lead || p.subtitle)}</p>
-            ${!hasBody && links ? `<div class="project-links project-links--head">${links}</div>` : ""}
+            ${headLinks ? `<div class="project-links project-links--head">${links}</div>` : ""}
           </div>
           <dl class="facts">
             ${fact("Год", p.year)}${fact("Клиент", K.esc(p.client))}${fact("Формат", K.esc(p.subtitle))}${fact("Направление", K.esc(p.role))}${fact("Команда", K.esc(p.team))}
@@ -62,7 +64,7 @@
         </div>
         ${hasBody ? `<div class="detail-body">
           <div class="mono muted" style="font-size:12px;text-transform:uppercase">О проекте</div>
-          <div><div class="prose">${(p.body || []).map((t) => `<p>${K.esc(t)}</p>`).join("")}</div>${links ? `<div class="project-links">${links}</div>` : ""}</div>
+          <div><div class="prose">${(p.body || []).map((t) => `<p>${K.esc(t)}</p>`).join("")}</div>${links && !headLinks ? `<div class="project-links">${links}</div>` : ""}</div>
         </div>` : ""}
         ${flow ? `<div class="case-flow">${flow}</div>` : legacy}
         ${p.source ? `<p class="case-source mono"><a href="${K.esc(p.source)}" target="_blank" rel="noopener">Этот кейс на Dprofile ${K.arrow}</a></p>` : ""}
@@ -71,6 +73,15 @@
         </a>
       </article>`;
     K.observe(main);
+    // ссылка вида /project/<id>/#download (для Dprofile и соцсетей): подсвечиваем кнопку скачивания
+    if (location.hash === "#download") {
+      const btn = main.querySelector(".link-more[download]");
+      if (btn) {
+        btn.classList.add("is-target");
+        requestAnimationFrame(() => btn.scrollIntoView({ block: "center", behavior: "smooth" }));
+        setTimeout(() => btn.classList.remove("is-target"), 6000);
+      }
+    }
   }
 
   /* ---------- СТАТЬИ ---------- */
